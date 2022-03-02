@@ -1,0 +1,20 @@
+def isShuffle(A, B, C):
+    m, n = len(A), len(B)
+    dp = [[False] * (n + 1) for _ in range(m + 1)]
+    dp[0][0] = True
+    for _ in range(1, n + 1):
+        if dp[0][_ - 1] and B[_ - 1] == C[_ - 1]:
+            dp[0][_] = True
+    for _ in range(1, m + 1):
+        if dp[_ - 1][0] and A[_ - 1] == C[_ - 1]:
+            dp[_][0] = True
+    print(dp[0])
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if (dp[i - 1][j] and A[i - 1] == C[i + j - 1]) or (dp[i][j - 1] and B[j - 1] == C[i + j - 1]):
+                dp[i][j] = True
+        print(dp[i])
+    return dp[m][n]
+
+A, B, C = "123bacdff", "456aedgna", '142536bacaeddgnffa'
+print(isShuffle(A, B, C))
