@@ -1,0 +1,24 @@
+def VankinMile(grid):
+    n = len(grid)
+    dp = [[float('-inf')] * n for _ in range(n)]
+    dp[n - 1][n - 1] = grid[n - 1][n - 1]
+    for _ in range(n - 2, -1, -1):
+        dp[n - 1][_] = max(grid[n - 1][_], grid[n - 1][_] + dp[n - 1][_ + 1])
+        dp[_][n - 1] = max(grid[_][n - 1], grid[_][n - 1] + dp[_ + 1][n - 1])
+
+    for i in range(n - 2, -1, -1):
+        for j in range(n - 2, -1, -1):
+            dp[i][j] = max(grid[i][j] + dp[i + 1][j], grid[i][j] + dp[i][j + 1])
+    res = 0
+    for _ in range(n):
+        res = max(res, max(dp[_]))
+
+    return res
+
+grid = [
+    [-1,-2,-3,-4],
+    [1,2,3,4],
+    [1,2,3,4],
+    [1,2,3,4],
+]
+print(VankinMile(grid))
